@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>iMdb API</title>
+    <style>
+    *
+    {
+        margin: 0;
+        padding: 0;
+    }
+    body
+    {
+        min-height: 100vh;
+        background: url("https://images.unsplash.com/photo-1546448396-6aef80193ceb?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1171&q=80")no-repeat;
+        background-size: cover;
+        background-position: center;
+    }
+    button
+    { 
+        padding: 11px;
+        border-radius: 10px;
+        font-size: 16px;
+        font-weight: 700;
+        color: azure;
+        border: none;
+        width: 100px;
+        background:linear-gradient(130deg, gray, yellow);
+    }
+    button:hover
+    {
+        box-shadow: 1px 1px 1px 1px gainsboro;
+    } 
+    #inp
+    {
+        padding: 10px;
+        border-radius: 13px;
+        width: 230px;
+        border: none;
+        font-size: 17px;
+        font-weight: bold;
+        color: black;
+        margin-left: 300px;
+        margin-top: 20px;
+        background-color: rgb(210, 207, 207);
+    }
+    #inp:hover
+    {
+        box-shadow:  1px 1px 1px white;
+    }
+    .img
+    {
+        border-radius: 15px;
+        margin: auto;
+        padding: 40px;
+        gap: 10px;
+    }
+    </style>
+</head>
+<body>
+    <input type="text" id="inp" placeholder="Film genres">
+    <button>Search</button>
+    <p></p>
+    <div class="img"></div>
+    <script>
+        let inp = document.getElementById("inp");
+        let btn = document.getElementsByTagName("button")[0];
+        let pa = document.getElementsByTagName("p")[0];
+
+        const options = {
+            method: 'GET',
+            headers: {
+                'X-RapidAPI-Key': '6a053dda04mshe67f96e982c32ccp1ff025jsnad7a49db7fec',
+                'X-RapidAPI-Host': 'imdb8.p.rapidapi.com'
+            }
+        };
+        btn.addEventListener("click", function (e) {
+            e.preventDefault();
+            fetch(`https://imdb8.p.rapidapi.com/auto-complete?q= ${inp.value}`, options)
+                .then(response => {
+                    return response.json()
+
+                })
+                .then(datas => {
+                    all(datas.d)
+                    console.log("uyglhk");
+                    console.log(datas)
+                })
+                .catch(err => console.error(err));
+        });
+        function all(datas) {
+            let appd = document.querySelector(".img");
+            [...appd.children].forEach((el) => {
+                el.remove();
+            })
+            for (const val of datas) {
+
+                let img = document.createElement("img");
+                img.src = val.i.imageUrl;
+                img.style.width = "250px";
+                img.style.height = "300px"
+                appd.append(img);
+
+            }
+
+        }
+
+    </script>
+</body>
+
+</html>
